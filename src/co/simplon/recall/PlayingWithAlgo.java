@@ -225,7 +225,17 @@ public class PlayingWithAlgo {
 	}
 
 	public static int[] letterPosition(String name) {
-		return null;
+		int longueurBoucle = name.length();
+		char[] tab = new char[longueurBoucle];
+		int[] resultat = new int[longueurBoucle];
+
+		for (int i = 0; i < longueurBoucle; i++) {
+			tab[i] = name.charAt(i);
+			resultat[i] = Character.getNumericValue(tab[i]) - 9;
+
+		}
+
+		return resultat;
 	}
 
 	public static long addingTwoNumbers(long number1, long number2) {
@@ -243,12 +253,15 @@ public class PlayingWithAlgo {
 	}
 
 	public static long addingSeveralNumbers(final long... numbers) {
-		return 0;
+		long resultat = 0;
+		for (int i = 0; i < numbers.length; i++)
+			resultat += numbers[i];
+
+		return resultat;
 	}
 
 	public static int[] allElementsExceptFirstThree(int array[]) {
 		int[] resultat = new int[array.length - 3];
-		System.out.println(resultat.length);
 
 		for (int i = 3; i < array.length; i++)
 			resultat[i - 3] = array[i];
@@ -312,7 +325,9 @@ public class PlayingWithAlgo {
 	}
 
 	public static int roundUp(float number) {
-		return 0;
+		int resultat = Math.round(number);
+
+		return resultat;
 	}
 
 	public static int findLastDayOfMonth(int month, int year) {
@@ -392,15 +407,40 @@ public class PlayingWithAlgo {
 	}
 
 	public static ArrayList<Integer> exportAllElementsPair(int[] array) {
-		return null;
+		ArrayList<Integer> listeResultat = new ArrayList<Integer>();
+
+		for (int i = 0; i < array.length; i++)
+			if (array[i] % 2 == 0)
+				listeResultat.add(array[i]);
+
+		return listeResultat;
 	}
 
 	public static ArrayList<Integer> exportAllUniqueElementsPair(int[] array) {
-		return null;
+		ArrayList<Integer> liste1 = new ArrayList<Integer>();
+
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] % 2 == 0)
+				liste1.add(array[i]);
+		}
+		ArrayList<Integer> liste2 = new ArrayList<Integer>();
+		for (int i = 0; i < liste1.size(); i++) {
+			if (!liste2.contains(liste1.get(i)))
+				liste2.add(liste1.get(i));
+		}
+
+		return liste2;
 	}
 
 	public static boolean checkIfTriangleRectangle(int number1, int number2, int number3) {
-		return false;
+		boolean resultat = false;
+
+		if (Math.pow(number1, 2) + Math.pow(number2, 2) == Math.pow(number3, 2)
+				|| Math.pow(number1, 2) + Math.pow(number3, 2) == Math.pow(number2, 2)
+				|| Math.pow(number2, 2) + Math.pow(number3, 2) == Math.pow(number1, 2))
+			resultat = true;
+
+		return resultat;
 	}
 
 	public static boolean checkSiTuPeuxAcheter(int prix) {
@@ -449,53 +489,127 @@ public class PlayingWithAlgo {
 	}
 
 	public static ArrayList<Integer> allElementsExceptFirstAndLast(int array[]) {
+		ArrayList<Integer> resultat = new ArrayList<Integer>();
 
-		return null;
+		for (int i = 1; i < array.length - 1; i++)
+			resultat.add(array[i]);
+
+		return resultat;
 	}
 
 	public static int[] allElementsExceptFirstAndLastInt(int array[]) {
-		return null;
+		int[] resultat = new int[array.length - 2];
+		int limiteBoucle = array.length - 1;
+
+		for (int i = 1; i < limiteBoucle; i++)
+			resultat[i - 1] = array[i];
+
+		return resultat;
 	}
 
 	public static ArrayList<Integer> allElementsWithIndexPair(int array[]) {
-		return null;
+		ArrayList<Integer> resultat = new ArrayList<Integer>();
+
+		for (int i = 0; i < array.length; i++)
+			if (i % 2 == 0)
+				resultat.add(array[i]);
+
+		return resultat;
 	}
 
 	public static ArrayList<Integer> reverseOrder(int array[]) {
-		return null;
+
+		ArrayList<Integer> liste1 = new ArrayList<Integer>();
+		int limiteBoucle = array.length - 1;
+
+		for (int i = limiteBoucle; i >= 0; i--)
+			liste1.add(array[i]);
+
+		return liste1;
 	}
 
 	public static int[] reverseOrderInt(int array[]) {
-		return null;
+
+		int limiteBoucle = array.length;
+		int[] resultat = new int[limiteBoucle];
+
+		for (int i = 0; i <= limiteBoucle - 1; i++)
+			resultat[i] = array[limiteBoucle - i - 1];
+
+		return resultat;
 	}
 
 	public static ArrayList<Integer> insertElementInTheMiddleOfAnArray(int array[], int element) {
-		return null;
+
+		ArrayList<Integer> liste1 = new ArrayList<Integer>();
+		int middle = array.length / 2;
+
+		for (int i = 0; i < middle; i++)
+			liste1.add(array[i]);
+
+		liste1.add(element);
+
+		for (int j = middle; j < array.length; j++)
+			liste1.add(array[j]);
+
+		return liste1;
 	}
 
 	public static ArrayList<Integer> exportElementsPair(ArrayList<Integer> list) {
 
-		return null;
+		ArrayList<Integer> resultat = new ArrayList<Integer>();
+
+		for (int i = 0; i < list.size(); i++)
+			if (list.get(i) % 2 == 0)
+				resultat.add(list.get(i));
+
+		return resultat;
 	}
 
 	public static ArrayList<Integer> exportElementsWithIndexPair(ArrayList<Integer> list) {
-		return null;
+
+		ArrayList<Integer> resultat = new ArrayList<Integer>();
+
+		for (int i = 0; i < list.size(); i++)
+			if (i % 2 == 0)
+				resultat.add(list.get(i));
+
+		return resultat;
 	}
 
 	public static int Addition(HashMap<String, Integer> addition) {
-		return 0;
+		int somme = 0;
+		for (int f : addition.values())
+			somme += f;
+
+		return somme;
 	}
 
 	public static boolean checkIfStringStartsWithA(String word) {
-		return false;
+		boolean resultat = false;
+
+		if (word.matches("^[aA].+"))
+			resultat = true;
+
+		return resultat;
 	}
 
 	public static boolean checkIfStringStartsWithVowel(String word) {
-		return false;
+		boolean resultat = false;
+
+		if (word.matches("^[aeiouyAEIOUY].+"))
+			resultat = true;
+
+		return resultat;
 	}
 
 	public static boolean checkIfStringEndsWithS(String word) {
-		return false;
+		boolean resultat = false;
+
+		if (word.matches(".+[sS]$"))
+			resultat = true;
+
+		return resultat;
 	}
 
 	public static String findShortestWord(String[] array) {
@@ -514,13 +628,34 @@ public class PlayingWithAlgo {
 	}
 
 	public static String swapFirstandLastLetter(String array) {
+		String resultat = array;
 
-		return null;
+		int taille = resultat.length() - 1;
+		char premier = resultat.charAt(0);
+		char dernier = resultat.charAt(taille);
+
+		resultat = resultat.replaceAll("(^.)", Character.toString(dernier));
+		resultat = resultat.replaceAll("(.$)", Character.toString(premier));
+
+		return resultat;
 	}
 
 	public static int[] swapFirstandLastElement(int[] array) {
+		int[] resultat = new int[array.length];
+		resultat[0] = array[array.length - 1];
+		resultat[array.length - 1] = array[0];
 
-		return null;
+		if (array.length == 1)
+			resultat[0] = array[0];
+
+		else
+
+		{
+			for (int i = 1; i < array.length - 1; i++)
+				resultat[i] = array[i];
+		}
+
+		return resultat;
 	}
 
 }
