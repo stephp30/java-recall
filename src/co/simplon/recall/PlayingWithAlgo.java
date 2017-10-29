@@ -1,6 +1,7 @@
 package co.simplon.recall;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class PlayingWithAlgo {
 
@@ -41,6 +42,7 @@ public class PlayingWithAlgo {
 	}
 
 	public static String[] removeNullElements(String array[]) {
+
 		String[] array2 = Arrays.stream(array).filter(s -> (s != null && s.length() > 0)).toArray(String[]::new);
 		return array2;
 	}
@@ -69,6 +71,7 @@ public class PlayingWithAlgo {
 	}
 
 	public static String[][] everyPossiblePair(String array[]) {
+
 		return null;
 	}
 
@@ -108,8 +111,6 @@ public class PlayingWithAlgo {
 		ArrayList<String> liste = new ArrayList<String>();
 		ArrayList<String> liste2 = new ArrayList<String>();
 
-		char letterUpper = Character.toUpperCase(letter);
-
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] != null)
 				if (array[i].matches("(?i:.*" + letter + ".*)")) {
@@ -132,11 +133,45 @@ public class PlayingWithAlgo {
 	}
 
 	public static int numberOfPalindromeWord(String text) {
-		return 0;
+		String premierTri = text.replaceAll("[ ']", "");
+		String deuxiemetri = premierTri.replaceAll("^.+:", "");
+		String[] tabDeMot = deuxiemetri.split(",");
+
+		int limiteBoucle = tabDeMot.length;
+		String[] tabDeMot2 = new String[limiteBoucle];
+		int resultat = 0;
+
+		for (int i = 0; i < limiteBoucle; i++) {
+			StringBuilder buffer = new StringBuilder(tabDeMot[i]);
+			String lettreInverse = buffer.reverse().toString();
+			tabDeMot2[i] = lettreInverse;
+
+			if (tabDeMot[i].equals(tabDeMot2[i]))
+				resultat += 1;
+
+		}
+
+		return resultat;
 	}
 
 	public static int numberOfPalindromeText(String text) {
-		return 0;
+		String premierTri = text.replaceAll("[ ']", "");
+		premierTri = premierTri.replaceAll("[?]", "");
+		premierTri = premierTri.toLowerCase();
+		String[] tabDeMot = premierTri.split(",");
+		String[] tabDeMot2 = new String[tabDeMot.length];
+		int limiteBoucle = tabDeMot.length;
+		int resultat = 0;
+
+		for (int i = 0; i < limiteBoucle; i++) {
+			StringBuilder buffer = new StringBuilder(tabDeMot[i]);
+			String lettreInverse = buffer.reverse().toString();
+			tabDeMot2[i] = lettreInverse;
+			if (tabDeMot[i].equals(tabDeMot2[i]))
+				resultat += 1;
+
+		}
+		return resultat;
 	}
 
 	public static String shortestWord(String text) {
@@ -175,7 +210,7 @@ public class PlayingWithAlgo {
 		}
 
 		// refait la liste sans doublon
-		Set<Character> listeSansDoublon = new TreeSet();
+		Set<Character> listeSansDoublon = new TreeSet<Character>();
 		listeSansDoublon.addAll(liste);
 		List<Character> listeFinale = new ArrayList<Character>(listeSansDoublon);
 
@@ -205,22 +240,52 @@ public class PlayingWithAlgo {
 
 	public static String getDomainName(String email) {
 
-		String domaine = email.replaceAll("^.+@", "");
-		domaine = domaine.replaceAll("....$", "");
+		String domaine = email.replaceAll("^.+@(.+)[\\.].+$", "$1");
 
 		return domaine;
 	}
 
 	public static String titleize(String title) {
+		String resultat = null;
 
-		return null;
+		// séparation en sous-chaînes
+		String[] tabMot = title.split(" ");
+		// parcours du tableau des sous-chaînes
+		for (int i = 0; i < tabMot.length; i++) {
+
+			if (tabMot[i].length() > 3 || i == 0) // si mot de moins de 3 lettres ou premier mot de la chaine
+
+			{
+				tabMot[i] = Character.toUpperCase(tabMot[i].charAt(0)) + tabMot[i].substring(1); // je passe en
+																									// majusqcule
+
+			}
+
+			int indexChar = tabMot[i].length() - 1;
+			if (tabMot[i].charAt(indexChar) == '.' && i < tabMot.length) // si le mot est après un point
+				tabMot[i + 1] = Character.toUpperCase(tabMot[i + 1].charAt(0)) + tabMot[i + 1].substring(1);// je passe
+																											// en
+																											// majusqcule
+
+			resultat = Arrays.toString(tabMot); // je repasse le tableau en String
+			resultat = resultat.replaceAll("^.(.+).$", "$1"); // Je supprime les [] restant après la transformation
+			resultat = resultat.replaceAll(",", ""); // je supprime les virgules
+
+		}
+
+		return resultat;
 	}
 
 	public static boolean checkForSpecialCharacters(String string) {
-		return false;
+		boolean resultat = false;
+		if (string.matches("^.*[\\W].*$"))
+			resultat = true;
+
+		return resultat;
 	}
 
 	public static String[] findAnagrams(String name) {
+
 		return null;
 	}
 
@@ -271,7 +336,7 @@ public class PlayingWithAlgo {
 
 	public static int[] addElementToBeginning(int array[], int element) {
 		int[] resultat = new int[array.length + 1];
-		int ajout = element;
+
 		resultat[0] = element;
 
 		for (int i = 1; i < resultat.length; i++)
@@ -290,7 +355,7 @@ public class PlayingWithAlgo {
 	}
 
 	public static String[] getElementsLowerThanSix(String[] array) {
-		Set<Integer> resultat = new TreeSet();
+		Set<Integer> resultat = new TreeSet<Integer>();
 
 		for (int i = 0; i < array.length; i++)
 			if (Integer.parseInt(array[i]) < 7)
@@ -309,19 +374,82 @@ public class PlayingWithAlgo {
 	}
 
 	public static int[] sortTabBySelection(int[] array) {
-		return null;
+
+		int resultat[] = array;
+		int index = 0;
+		int plusPetit = 0;
+
+		for (int i = 0; i < resultat.length - 1; i++) {
+			index = i;
+			for (int j = i + 1; j < resultat.length; j++)
+				if (resultat[j] < resultat[index])
+					index = j;
+
+			plusPetit = resultat[index];
+			resultat[index] = resultat[i];
+			resultat[i] = plusPetit;
+		}
+		return resultat;
 	}
 
 	public static int[] sortTabByInsertion(int[] array) {
-		return null;
+		int longueur = array.length;
+		int[] resultat = array;
+
+		for (int i = 1; i < longueur; i++) {
+			int memory = resultat[i];
+			int compt = i - 1;
+			boolean marqueur;
+			do {
+				marqueur = false;
+				if (resultat[compt] > memory) {
+					resultat[compt + 1] = resultat[compt];
+					compt--;
+					marqueur = true;
+				}
+				if (compt < 0)
+					marqueur = false;
+			} while (marqueur);
+			resultat[compt + 1] = memory;
+		}
+
+		return resultat;
 	}
 
 	public static int[] sortTabByBubble(int[] array) {
-		return null;
+
+		int temp;
+		int[] resultat = array;
+
+		for (int i = resultat.length - 1; i >= 1; i--) {
+			for (int j = 0; j < i; j++)
+				if (resultat[j] > resultat[j + 1]) {
+					temp = resultat[j + 1];
+					resultat[j + 1] = resultat[j];
+					resultat[j] = temp;
+					// System.out.println(Arrays.toString(resultat));
+				}
+		}
+		return resultat;
 	}
 
 	public static int findIndexByDichotomy(int elemet, int[] array) {
-		return 0;
+
+		int indexMax = array.length - 1;
+		int premier = 0;
+		int dernier = indexMax;
+		int milieu;
+		int Rang = -1;
+		do {
+			milieu = (premier + dernier) / 2;
+			if (elemet == array[milieu])
+				Rang = milieu;
+			else if (array[milieu] < elemet)
+				premier = milieu + 1;
+			else
+				dernier = milieu - 1;
+		} while ((elemet != array[milieu]) & (premier <= dernier));
+		return Rang;
 	}
 
 	public static int roundUp(float number) {
@@ -474,8 +602,12 @@ public class PlayingWithAlgo {
 	}
 
 	public static boolean checkCase2a(int number1, int number2) {
+		boolean resultat = false;
 
-		return false;
+		if ((number1 == number2 + 1) || (number2 == number1 + 1))
+			resultat = true;
+
+		return resultat;
 
 	}
 
